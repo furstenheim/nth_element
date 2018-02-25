@@ -8,6 +8,14 @@ import (
 	"math/rand"
 )
 
+const sizeBench = 200000
+var benchArray200k = make([]int, sizeBench)
+func init () {
+	for i := 0; i < sizeBench; i++ {
+		benchArray200k[i] = rand.Int()
+	}
+}
+
 func TestBucketsSize1(t *testing.T) {
 	a := []int{65, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
 	Buckets(sorter(a), 1)
@@ -74,6 +82,35 @@ func TestSelectVariousIndices(t *testing.T) {
 		copyBefore := append([]int{}, arr...)
 		Select(sorter(arr), i, 0, len(arr) - 1)
 		assert.Equal(t, arr[i], sortedCopy[i], "Failed with values: ", i, copyBefore, arr)
+	}
+}
+
+
+func BenchmarkSort200kSize5(b *testing.B) {
+	for n:= 0; n < b.N; n++ {
+		copyArray := append([]int{}, benchArray200k...)
+		sort.Sort(sorter(copyArray))
+	}
+}
+
+func BenchmarkBuckets200knBuckets5(b *testing.B) {
+	for n:= 0; n < b.N; n++ {
+		copyArray := append([]int{}, benchArray200k...)
+		Buckets(sorter(copyArray), len(copyArray) / 5)
+	}
+}
+
+func BenchmarkBuckets200knBuckets16(b *testing.B) {
+	for n:= 0; n < b.N; n++ {
+		copyArray := append([]int{}, benchArray200k...)
+		Buckets(sorter(copyArray), len(copyArray) / 16)
+	}
+}
+
+func BenchmarkBuckets200knBuckets32(b *testing.B) {
+	for n:= 0; n < b.N; n++ {
+		copyArray := append([]int{}, benchArray200k...)
+		Buckets(sorter(copyArray), len(copyArray) / 32)
 	}
 }
 

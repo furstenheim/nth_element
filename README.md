@@ -24,4 +24,17 @@ This library implements the [Floyd Rivest](https://en.wikipedia.org/wiki/Floyd%E
     // ...
 
 
+### Benchmark
+Algorithm is specially fast when the number of buckets is small (ie bucketSize is big)
 
+    -- Plain sorting
+    BenchmarkSort200kSize5-4           	     100	  71359551 ns/op
+    BenchmarkBuckets200knBuckets5-4    	     300	  24358098 ns/op
+    BenchmarkBuckets200knBuckets16-4   	     200	  35642710 ns/op
+    BenchmarkBuckets200knBuckets32-4   	     200	  40671283 ns/op
+
+For example, for an array of 200k elements, organizing the elements into 5 buckets with Floyd Rivest is 3x times faster than plain sort.
+
+
+### Acknowldegment
+The library is based on the insight from [Mourner](https://github.com/mourner/rbush/blob/master/index.js#L547) that Floyd-Rivest performs better than plain sort
