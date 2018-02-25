@@ -1,11 +1,19 @@
+// Package FloydRivest provides implementation of Floyd-Rivest select
 package FloydRivest
 
 import (
 	"sort"
 	"math"
 )
-// Sort a slice into buckets of given size. All elements from one bucket are smaller than any element  from the next one.
+
+// Buckets. Sort a slice into buckets of given size. All elements from one bucket are smaller than any element  from the next one.
 // elements at position i * bucketSize are guaranteed to be the (i * bucketSize) th smallest elements
+// s := // some slice
+// FloydRivest.Buckets(sort.Interface(s), 5)
+// s is now sorted into buckets of size 5
+// max(s[0:5]) < min(s[5:10])
+// max(s[10: 15]) < min(s[15:20])
+// ...
 func Buckets(slice sort.Interface, bucketSize int) {
 	left := 0
 	right := slice.Len() - 1
