@@ -17,7 +17,6 @@ func Buckets(slice sort.Interface, bucketSize int) {
 		if (right - left <= bucketSize) {
 			continue
 		}
-		// max is to avoid the case where left - right < 2n
 		// + bucketSize - 1 is to do math ceil
 		mid = left + ((right - left + bucketSize - 1) / bucketSize / 2) * bucketSize
 		Select(slice, mid, left, right)

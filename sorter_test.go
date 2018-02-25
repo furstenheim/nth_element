@@ -6,20 +6,43 @@ import (
 	"reflect"
 	"github.com/stretchr/testify/assert"
 	"math/rand"
-	"fmt"
 )
 
-func TestBuckets(t *testing.T) {
+func TestBucketsSize1(t *testing.T) {
 	a := []int{65, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
 	Buckets(sorter(a), 1)
 	expected := append([]int{}, a...)
 	// If bucket size is 1 then it should be the same
 	sort.Sort(sorter(expected))
 
-	assert.True(t, reflect.DeepEqual(a, expected), "")
-	shuffle(a)
+	assert.True(t, reflect.DeepEqual(a, expected), "If buckets have size 1 we should be sorting")
+}
 
-	Buckets(sorter(a), 1)
+func TestBucketsBig(t *testing.T) {
+	size := 4000
+	a := make([]int, size)
+	for i := 0; i < size; i++ {
+		a[i] = rand.Int()
+	}
+	sortedCopy := append([]int{}, a...)
+	sort.Sort(sorter(sortedCopy))
+	for i := 4; i < 300; i++ {
+		shuffle(a)
+		bucketSize := i
+		Buckets(sorter(a), bucketSize)
+		nBuckets := size / bucketSize
+		maxs := make([]int, nBuckets)
+		mins := make([]int, nBuckets)
+		// Compute bounds of buckets
+		for j := 0; j < nBuckets; j++ {
+			min, max := minmaxIntSlice(a[bucketSize * j : bucketSize * (j + 1)])
+			maxs[j] = max
+			mins[j] = min
+		}
+		for j := 0; j < nBuckets -1; j++ {
+			assert.True(t, maxs[j] < mins[j + 1], "All elements from one bucket should be smaller than elements from the next")
+		}
+	}
 }
 
 func TestSelectKnownArray(t *testing.T) {
@@ -73,4 +96,21 @@ func (s sorter) Swap(i, j int) {
 
 func (s sorter) Less (i, j int) bool {
 	return s[i] < s[j]
+}
+
+func minmaxIntSlice (s []int) (min, max int) {
+	if (len(s) == 0) {
+		return 0, 0
+	}
+	min = s[0]
+	max = s[0]
+	for _, e := range s {
+		if e < min {
+			min = e
+		}
+		if e > min {
+			max = e
+		}
+	}
+	return min, max
 }
