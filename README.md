@@ -28,10 +28,12 @@ This library implements the [Floyd Rivest](https://en.wikipedia.org/wiki/Floyd%E
 Algorithm is specially fast when the number of buckets is small (ie bucketSize is big)
 
     -- Plain sorting
-    BenchmarkSort200kSize5-4           	     100	  71359551 ns/op
-    BenchmarkBuckets200knBuckets5-4    	     300	  24358098 ns/op
-    BenchmarkBuckets200knBuckets16-4   	     200	  35642710 ns/op
-    BenchmarkBuckets200knBuckets32-4   	     200	  40671283 ns/op
+    BenchmarkSort200kSize5-4           	     100	  64445230 ns/op
+    -- Floyd Rivest
+    BenchmarkBuckets200knBuckets5-4    	     300	  21781135 ns/op
+    BenchmarkBuckets200knBuckets16-4   	     200	  33314467 ns/op
+    BenchmarkBuckets200knBuckets32-4   	     200	  40017337 ns/op
+
 
 For example, for an array of 200k elements, organizing the elements into 5 buckets with Floyd Rivest is 3x times faster than plain sort.
 

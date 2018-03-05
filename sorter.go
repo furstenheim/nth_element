@@ -40,6 +40,7 @@ func Buckets(slice sort.Interface, bucketSize int) {
 // k is the desired index value, where array[k] is the k+1 smallest element
 // when left = 0
 func Select(array sort.Interface, k, left, right int) {
+	length := array.Len()
 	for (right > left) {
 		if (right - left > 600) {
 			var n = float64(right - left + 1)
@@ -73,7 +74,7 @@ func Select(array sort.Interface, k, left, right int) {
 			array.Swap(i, j)
 			i++
 			j--
-			for i < array.Len() && array.Less(i, pointIndex) {
+			for i < length && array.Less(i, pointIndex) {
 				i++
 			}
 			for j >= 0 && array.Less(pointIndex, j) {
