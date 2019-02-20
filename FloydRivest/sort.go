@@ -4,6 +4,7 @@ package FloydRivest
 import (
 	"sort"
 	"math"
+	_ "github.com/furstenheim/nth_element/utils"
 )
 
 // Buckets. Sort a slice into buckets of given size. All elements from one bucket are smaller than any element  from the next one.
@@ -14,7 +15,7 @@ import (
 // max(s[0:5]) < min(s[5:10])
 // max(s[10: 15]) < min(s[15:20])
 // ...
-func FloydRivestBuckets(slice sort.Interface, bucketSize int) {
+func Buckets(slice sort.Interface, bucketSize int) {
 	left := 0
 	right := slice.Len() - 1
 	s := stack([]int{left, right})
@@ -27,7 +28,7 @@ func FloydRivestBuckets(slice sort.Interface, bucketSize int) {
 		}
 		// + bucketSize - 1 is to do math ceil
 		mid = left + ((right - left + bucketSize - 1) / bucketSize / 2) * bucketSize
-		FloydRivestSelect(slice, mid, left, right)
+		Select(slice, mid, left, right)
 		s = s.push(left)
 		s = s.push(mid)
 		s = s.push(mid)
@@ -39,7 +40,7 @@ func FloydRivestBuckets(slice sort.Interface, bucketSize int) {
 // right is the right index for the interval
 // k is the desired index value, where array[k] is the k+1 smallest element
 // when left = 0
-func FloydRivestSelect(array sort.Interface, k, left, right int) {
+func Select(array sort.Interface, k, left, right int) {
 	length := array.Len()
 	for (right > left) {
 		if (right - left > 600) {
@@ -55,7 +56,7 @@ func FloydRivestSelect(array sort.Interface, k, left, right int) {
 			var sd = 0.5 * math.Sqrt(z * s * (n - s) / n) * sign
 			var newLeft = max(left, int(math.Floor(kf - m * s / n + sd)))
 			var newRight = min(right, int(math.Floor(kf + (n - m) * s / n + sd)))
-			FloydRivestSelect(array, k, newLeft, newRight)
+			Select(array, k, newLeft, newRight)
 		}
 
 		var i = left

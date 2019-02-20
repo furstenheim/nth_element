@@ -1,8 +1,11 @@
-package FloydRivest
+package project_test
 
 import (
 	"testing"
 	"fmt"
+	"github.com/furstenheim/nth_element/FloydRivest"
+	"github.com/furstenheim/nth_element/utils"
+
 )
 const MAX_SIZE_ARRAY = 1000000
 
@@ -48,7 +51,7 @@ func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []i
 		for i := 0; i < size; i++ {
 			inputArray = append(inputArray, ta.array[i])
 		}
-		IntFloydRivestBuckets(IntSorter(inputArray), bucketSize)
+		FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
 	}
 
 }

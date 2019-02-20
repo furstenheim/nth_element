@@ -1,6 +1,5 @@
 package FloydRivest
 
-
 func min (a, b int) int{
 	if a < b {
 		return a
@@ -25,5 +24,6 @@ func (s stack) pop () (stack, int) {
 	l := len(s)
 	return s[:l-1], s[l-1]
 }
+
 
 

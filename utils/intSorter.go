@@ -1,8 +1,7 @@
-package FloydRivest
+package nthElementUtils
 
 type IntSorter []int
 
-//go:generate ./generate.sh
 
 func (s IntSorter) Len() int {
 	return len(s)
