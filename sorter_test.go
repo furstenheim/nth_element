@@ -18,7 +18,7 @@ func init () {
 
 func TestBucketsSize1(t *testing.T) {
 	a := []int{65, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
-	Buckets(sorter(a), 1)
+	FloydRivestBuckets(sorter(a), 1)
 	expected := append([]int{}, a...)
 	// If bucket size is 1 then it should be the same
 	sort.Sort(sorter(expected))
@@ -37,7 +37,7 @@ func TestBucketsBig(t *testing.T) {
 	for i := 4; i < 300; i++ {
 		shuffle(a)
 		bucketSize := i
-		Buckets(sorter(a), bucketSize)
+		FloydRivestBuckets(sorter(a), bucketSize)
 		nBuckets := size / bucketSize
 		maxs := make([]int, nBuckets)
 		mins := make([]int, nBuckets)
@@ -58,7 +58,7 @@ func TestSelectKnownArray(t *testing.T) {
 	sortedCopy := append([]int{}, arr...)
 	sort.Sort(sorter(sortedCopy))
 	index := 8
-	Select(sorter(arr), index, 0, len(arr) - 1)
+	FloydRivestSelect(sorter(arr), index, 0, len(arr) - 1)
 	assert.True(t, reflect.DeepEqual(arr, []int{39, 28, 28, 33, 21, 12, 22, 50, 53, 56, 59, 65, 90, 77, 95}))
 	assert.Equal(t, arr[index], sortedCopy[index])
 }
@@ -68,7 +68,7 @@ func TestSelectKnownArray2(t *testing.T) {
 	sortedCopy := append([]int{}, arr...)
 	sort.Sort(sorter(sortedCopy))
 	index := 3
-	Select(sorter(arr), index, 0, len(arr) - 1)
+	FloydRivestSelect(sorter(arr), index, 0, len(arr) - 1)
 	assert.True(t, reflect.DeepEqual(arr, []int{12, 21, 22, 28, 28, 33, 39, 50, 53, 56, 59, 65, 77, 90, 95}))
 	assert.Equal(t, arr[index], sortedCopy[index])
 }
@@ -80,37 +80,8 @@ func TestSelectVariousIndices(t *testing.T) {
 	for i := 0; i < len(arr); i++ {
 		shuffle(arr)
 		copyBefore := append([]int{}, arr...)
-		Select(sorter(arr), i, 0, len(arr) - 1)
+		FloydRivestSelect(sorter(arr), i, 0, len(arr) - 1)
 		assert.Equal(t, arr[i], sortedCopy[i], "Failed with values: ", i, copyBefore, arr)
-	}
-}
-
-
-func BenchmarkSort200kSize5(b *testing.B) {
-	for n:= 0; n < b.N; n++ {
-		copyArray := append([]int{}, benchArray200k...)
-		sort.Sort(sorter(copyArray))
-	}
-}
-
-func BenchmarkBuckets200knBuckets5(b *testing.B) {
-	for n:= 0; n < b.N; n++ {
-		copyArray := append([]int{}, benchArray200k...)
-		Buckets(sorter(copyArray), len(copyArray) / 5)
-	}
-}
-
-func BenchmarkBuckets200knBuckets16(b *testing.B) {
-	for n:= 0; n < b.N; n++ {
-		copyArray := append([]int{}, benchArray200k...)
-		Buckets(sorter(copyArray), len(copyArray) / 16)
-	}
-}
-
-func BenchmarkBuckets200knBuckets32(b *testing.B) {
-	for n:= 0; n < b.N; n++ {
-		copyArray := append([]int{}, benchArray200k...)
-		Buckets(sorter(copyArray), len(copyArray) / 32)
 	}
 }
 

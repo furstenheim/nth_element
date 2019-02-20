@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-sed -E 's/Buckets/IntBuckets/g; s/Select/IntSelect/g; s/sort.Interface/IntSorter/g' sorter.go > sortInt.go
-sed -i '/sort/d' sortInt.go
+sed -E 's/FloydRivestBuckets/IntFloydRivestBuckets/g; s/FloydRivestSelect/IntFloydRivestSelect/g; s/sort.Interface/IntSorter/g' floydRivest.go > intFloydRivest.go
+sed -i '/sort/d' intFloydRivest.go

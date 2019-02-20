@@ -2,17 +2,19 @@
 package FloydRivest
 
 import (
+	"sort"
 	"math"
 )
 
-// IntBuckets. Sort a slice into buckets of given size. All elements from one bucket are smaller than any element  from the next one.
+// Buckets. Sort a slice into buckets of given size. All elements from one bucket are smaller than any element  from the next one.
 // elements at position i * bucketSize are guaranteed to be the (i * bucketSize) th smallest elements
 // s := // some slice
-// FloydRivest.IntBuckets(IntSorter(s), 5)
+// FloydRivest.Buckets(sort.Interface(s), 5)
+// s is now sorted into buckets of size 5
 // max(s[0:5]) < min(s[5:10])
 // max(s[10: 15]) < min(s[15:20])
 // ...
-func IntBuckets(slice IntSorter, bucketSize int) {
+func FloydRivestBuckets(slice sort.Interface, bucketSize int) {
 	left := 0
 	right := slice.Len() - 1
 	s := stack([]int{left, right})
@@ -25,7 +27,7 @@ func IntBuckets(slice IntSorter, bucketSize int) {
 		}
 		// + bucketSize - 1 is to do math ceil
 		mid = left + ((right - left + bucketSize - 1) / bucketSize / 2) * bucketSize
-		IntSelect(slice, mid, left, right)
+		FloydRivestSelect(slice, mid, left, right)
 		s = s.push(left)
 		s = s.push(mid)
 		s = s.push(mid)
@@ -37,7 +39,7 @@ func IntBuckets(slice IntSorter, bucketSize int) {
 // right is the right index for the interval
 // k is the desired index value, where array[k] is the k+1 smallest element
 // when left = 0
-func IntSelect(array IntSorter, k, left, right int) {
+func FloydRivestSelect(array sort.Interface, k, left, right int) {
 	length := array.Len()
 	for (right > left) {
 		if (right - left > 600) {
@@ -53,12 +55,13 @@ func IntSelect(array IntSorter, k, left, right int) {
 			var sd = 0.5 * math.Sqrt(z * s * (n - s) / n) * sign
 			var newLeft = max(left, int(math.Floor(kf - m * s / n + sd)))
 			var newRight = min(right, int(math.Floor(kf + (n - m) * s / n + sd)))
-			IntSelect(array, k, newLeft, newRight)
+			FloydRivestSelect(array, k, newLeft, newRight)
 		}
 
 		var i = left
 		var j = right
 		array.Swap(left, k)
+		// in the original algorithm array[k] is stored to a value. To use golangs sort interface we need to keep track of the changes for the index
 		// we define it as right because in the first iteration of for i<j it will be changed
 		pointIndex := right
 		if array.Less(left, right) {
