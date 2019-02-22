@@ -4,6 +4,7 @@ import (
 	"testing"
 	"fmt"
 	"github.com/furstenheim/nth_element/FloydRivest"
+	"github.com/furstenheim/nth_element/FullSort"
 	"github.com/furstenheim/nth_element/utils"
 
 )
@@ -32,7 +33,7 @@ func BenchmarkBuckets (b *testing.B) {
 
 	for _, bucket := range(buckets) {
 		for _, ts := range(testSizes) {
-			b.Run(fmt.Sprintf("Size %d, %d buckets", ts.n, bucket.n), func (b *testing.B) {
+			b.Run(fmt.Sprintf("Size %d/Buckets %d", ts.n, bucket.n), func (b *testing.B) {
 				for _, t := range(testArrays) {
 					b.Run(t.name, func (b * testing.B) {
 						benchArray(b, ts.n, bucket.n, t, inputArray)
@@ -46,13 +47,24 @@ func BenchmarkBuckets (b *testing.B) {
 
 func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []int) {
 	bucketSize := size / nBuckets
-	for n := 0; n < b.N; n++ {
-		inputArray = inputArray[0:0]
-		for i := 0; i < size; i++ {
-			inputArray = append(inputArray, ta.array[i])
+	b.Run("Floyd Rivest", func (b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			inputArray = inputArray[0:0]
+			for i := 0; i < size; i++ {
+				inputArray = append(inputArray, ta.array[i])
+			}
+			FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
 		}
-		FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
-	}
+	})
+	b.Run("Full Sort", func (b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			inputArray = inputArray[0:0]
+			for i := 0; i < size; i++ {
+				inputArray = append(inputArray, ta.array[i])
+			}
+			FullSort.Sort(nthElementUtils.IntSorter(inputArray))
+		}
+	})
 
 }
 
