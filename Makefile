@@ -1,5 +1,6 @@
 bench:
-	go test -v -bench=.
+	go test -v -bench=. | tee benchmark.md
+	node scripts/gnuplot.js
 bench-graph:
 	mkdir -p benchmarks/$$(date +%F)-$$(git rev-parse HEAD)
 	go test -run=XXX -bench . -cpuprofile benchmarks/$$(date +%F)-$$(git rev-parse HEAD)/cpu.prof

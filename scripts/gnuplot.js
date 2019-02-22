@@ -1,10 +1,14 @@
 const spawn = require('child_process').spawn
 const fs = require('fs')
 const _ = require('lodash')
+const path = require('path')
 require('@geoblink/lodash-mixins').default(_)
-const benchmark = fs.readFileSync('a').toString().split('\n')
+const benchmark = fs.readFileSync(path.join(__dirname, '..', 'benchmark.md')).toString().split('\n')
 const benchmarkSplit = _.mapNonNil(benchmark, function (b) {
   if (!b) {
+    return null
+  }
+  if (!b.startsWith('Benchmark')) {
     return null
   }
   const a = b.split('\t')
@@ -24,8 +28,8 @@ const groupedBenchmarks = _.groupBy(benchmarkSplit, function (b) {
 })
 
 _.forEach(groupedBenchmarks, function (benchmarks) {
-  const title = `${benchmarks[0].type} - ${benchmarks[0].buckets}.png`
-  const out = fs.createWriteStream(title)
+  const title = `${benchmarks[0].type}-${benchmarks[0].buckets}.png`
+  const out = fs.createWriteStream(path.join(__dirname, title))
   const data = _.map(_.groupBy(benchmarks, 'algorithm'), function (sameAlgBenchmarks, algorithm) {
     const sorted = _.sortBy(sameAlgBenchmarks, 'size')
     return {
@@ -37,7 +41,12 @@ _.forEach(groupedBenchmarks, function (benchmarks) {
     [
       '-p',
       '-e',
-      `set datafile separator ','; set term png; set logscale xy; plot  ${_.map(data, d => `'-' using 1:2 title "${d.algorithm}" with linespoints`).join(', ')}`
+      `set datafile separator ',';
+       set term png;
+       set grid;
+       set title "${benchmarks[0].type}";
+       set logscale xy;
+       plot  ${_.map(data, d => `'-' using 1:2 title "${d.algorithm}" with linespoints`).join(', ')}`
     ])
   gnuplot.stdout.pipe(out)
   gnuplot.stderr.on('data', function (e) {

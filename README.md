@@ -1,15 +1,21 @@
-## Floyd Rivest
+## nth_element
 
-This library implements the [Floyd Rivest](https://en.wikipedia.org/wiki/Floyd%E2%80%93Rivest_algorithm) algorithm.
+Golang implementation of [selection algorithm](https://en.wikipedia.org/wiki/Selection_algorithm).
+
+Selection algorithm is a partial sorting algorithm that rearranges elements such that if elements [first, last) 
+were sorted, then the element at given nth position coincides. All elements in position i < n satisfy a[i] <= a[n].
+All elements in position i > n satisfy a[i] >= a[n].
+
+Currently his library implements the [Floyd Rivest](https://en.wikipedia.org/wiki/Floyd%E2%80%93Rivest_algorithm) algorithm.
 
 ### Installation
 
-    go get github.com/furstenheim/FloydRivest
+    go get github.com/furstenheim/nth_element
 
 ### Import
 
     import (
-        "github.com/furstenheim/FloydRivest"
+        "github.com/furstenheim/nth_element/FloydRivest"
     )
 
 ### Methods
@@ -25,18 +31,16 @@ This library implements the [Floyd Rivest](https://en.wikipedia.org/wiki/Floyd%E
 
 
 ### Benchmark
-Algorithm is specially fast when the number of buckets is small (ie bucketSize is big)
 
-    -- Plain sorting
-    BenchmarkSort200kSize5-4           	     100	  64445230 ns/op
-    -- Floyd Rivest
-    BenchmarkBuckets200knBuckets5-4    	     300	  21781135 ns/op
-    BenchmarkBuckets200knBuckets16-4   	     200	  33314467 ns/op
-    BenchmarkBuckets200knBuckets32-4   	     200	  40017337 ns/op
+All benchmarks can be found [here](./benchmark.md)
 
+This is a comparison with plain sort for selection of median, when array is decending order.
 
-For example, for an array of 200k elements, organizing the elements into 5 buckets with Floyd Rivest is 3x times faster than plain sort.
+ ![inverted-elements](./scripts/inverted-2.png)
+ 
+ This is a comparison when array is in saw mode (a[i] = i % 10)
 
+![inverted-elements](./scripts/sawLike-2.png)
 
 ### Acknowldegment
 The library is based on the insight from [Mourner](https://github.com/mourner/rbush/blob/master/index.js#L547) that Floyd-Rivest performs better than plain sort
