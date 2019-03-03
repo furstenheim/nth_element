@@ -16,21 +16,21 @@ import (
 func IntBuckets(slice nthElementUtils.IntSorter, bucketSize int) {
 	left := 0
 	right := slice.Len() - 1
-	s := stack([]int{left, right})
+	s := nthElementUtils.Stack([]int{left, right})
 	var mid int
 	for len(s) > 0 {
-		s, right = s.pop()
-		s, left = s.pop()
+		s, right = s.Pop()
+		s, left = s.Pop()
 		if (right - left <= bucketSize) {
 			continue
 		}
 		// + bucketSize - 1 is to do math ceil
 		mid = left + ((right - left + bucketSize - 1) / bucketSize / 2) * bucketSize
 		IntSelect(slice, mid, left, right)
-		s = s.push(left)
-		s = s.push(mid)
-		s = s.push(mid)
-		s = s.push(right)
+		s = s.Push(left)
+		s = s.Push(mid)
+		s = s.Push(mid)
+		s = s.Push(right)
 	}
 }
 
@@ -52,8 +52,8 @@ func IntSelect(array nthElementUtils.IntSorter, k, left, right int) {
 				sign = -1
 			}
 			var sd = 0.5 * math.Sqrt(z * s * (n - s) / n) * sign
-			var newLeft = max(left, int(math.Floor(kf - m * s / n + sd)))
-			var newRight = min(right, int(math.Floor(kf + (n - m) * s / n + sd)))
+			var newLeft = nthElementUtils.IntMax(left, int(math.Floor(kf - m * s / n + sd)))
+			var newRight = nthElementUtils.IntMin(right, int(math.Floor(kf + (n - m) * s / n + sd)))
 			IntSelect(array, k, newLeft, newRight)
 		}
 

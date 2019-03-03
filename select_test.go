@@ -29,3 +29,23 @@ func TestSelect_BigArray (t * testing.T) {
 	}
 }
 
+func TestSelect_RandomArray (t * testing.T) {
+	var a = make([]int, 200000)
+	for i, _ := range(a) {
+		a[i] = rand.Int()
+	}
+	nTests := 20
+	for j := 0; j < nTests; j++ {
+		rand.Shuffle(len(a), func (i, j int) { a[i], a[j] = a[j], a[i] })
+		k := rand.Intn(len(a))
+		FloydRivest.Select(nthElementUtils.IntSorter(a), k, 0, len(a) - 1)
+		v := a[k]
+		for i := 0; i < k; i++ {
+			assert.LessOrEqual(t, a[i], v)
+		}
+		for i := k + 1; i < len(a); i++ {
+			assert.LessOrEqual(t, v, a[i])
+		}
+	}
+}
+
