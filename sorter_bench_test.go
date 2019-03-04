@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/furstenheim/nth_element/FloydRivest"
 	"github.com/furstenheim/nth_element/FullSort"
+	"github.com/furstenheim/nth_element/QuickSelect"
 	"github.com/furstenheim/nth_element/utils"
 
 )
@@ -27,7 +28,7 @@ func BenchmarkBuckets (b *testing.B) {
 	} {
 		{2},
 		{9},
-		{32},
+		//{32},
 	}
 	var inputArray = make([]int, MAX_SIZE_ARRAY)
 
@@ -56,6 +57,17 @@ func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []i
 			FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
 		}
 	})
+	if (size < 1000000) { // Quick select is quadratic for constant values
+		b.Run("QuickSelect", func (b *testing.B) {
+			for n := 0; n < b.N; n++ {
+				inputArray = inputArray[0:0]
+				for i := 0; i < size; i++ {
+					inputArray = append(inputArray, ta.array[i])
+				}
+				QuickSelect.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
+			}
+		})
+	}
 	b.Run("Full Sort", func (b *testing.B) {
 		for n := 0; n < b.N; n++ {
 			inputArray = inputArray[0:0]
