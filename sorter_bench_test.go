@@ -50,20 +50,16 @@ func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []i
 	bucketSize := size / nBuckets
 	b.Run("Floyd Rivest", func (b *testing.B) {
 		for n := 0; n < b.N; n++ {
-			inputArray = inputArray[0:0]
-			for i := 0; i < size; i++ {
-				inputArray = append(inputArray, ta.array[i])
-			}
+			inputArray = inputArray[0:size]
+			ta.setUpFunction(inputArray)
 			FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
 		}
 	})
 	if (size < 1000000) { // Quick select is quadratic for constant values
 		b.Run("QuickSelect", func (b *testing.B) {
 			for n := 0; n < b.N; n++ {
-				inputArray = inputArray[0:0]
-				for i := 0; i < size; i++ {
-					inputArray = append(inputArray, ta.array[i])
-				}
+				inputArray = inputArray[0:size]
+				ta.setUpFunction(inputArray)
 				QuickSelect.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
 			}
 		})
@@ -71,9 +67,8 @@ func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []i
 	b.Run("Full Sort", func (b *testing.B) {
 		for n := 0; n < b.N; n++ {
 			inputArray = inputArray[0:0]
-			for i := 0; i < size; i++ {
-				inputArray = append(inputArray, ta.array[i])
-			}
+			inputArray = inputArray[0:size]
+			ta.setUpFunction(inputArray)
 			FullSort.Sort(nthElementUtils.IntSorter(inputArray))
 		}
 	})
@@ -111,37 +106,55 @@ func BenchmarkBuckets200knBuckets32(b *testing.B) {
 }*/
 
 func getTestArrays ()  []testArray {
-	var sortedArray = make([]int, MAX_SIZE_ARRAY)
-	var invertedArray = make([]int, MAX_SIZE_ARRAY)
-	var constantArray = make([]int, MAX_SIZE_ARRAY)
-	var sawArray = make([]int, MAX_SIZE_ARRAY)
-	for i, _ := range(sortedArray) {
-		sortedArray[i] = i
-		invertedArray[i] = len(invertedArray) - i
-		sawArray[i] = i % 10
-	}
-
 	return []testArray {
 		{
 			"sorted",
-			sortedArray,
+			func (array []int) {
+				for i, _ := range(array) {
+					array[i] = i
+				}
+			},
 		},
 		{
 			"inverted",
-			invertedArray,
+			func (array []int) {
+				for i, _ := range(array) {
+					array[i] = len(array) - i
+				}
+			},
 		},
 		{
 			"constant",
-			constantArray,
+			func (array []int) {
+				for i, _ := range(array) {
+					array[i] = 0
+				}
+			},
 		},
 		{
 			"sawLike",
-			sawArray,
+			func (array []int) {
+				for i, _ := range(array) {
+					array[i] = i % (len(array) / 100)
+				}
+			},
+		},
+		{
+			"pyramid",
+			func (array []int) {
+				for i, _ := range(array) {
+					if i < len(array) / 2 {
+						array[i] = i
+					} else {
+						array[i] = len(array) - i
+					}
+				}
+			},
 		},
 	}
 }
 
 type testArray struct {
 	name string
-	array []int
+	setUpFunction func (array []int)
 }
