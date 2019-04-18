@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"github.com/furstenheim/nth_element/FloydRivest"
+	"github.com/furstenheim/nth_element/MediansOfMedians"
 )
 //go:generate ./generate.sh
 
@@ -44,6 +45,20 @@ func TestSelect_ConcreteExamples (t * testing.T) {
 					3,
 					[]int{22, 33, 12, 95, 65, 28, 28, 77, 39, 21, 59, 50, 53, 56, 90},
 					[]int{12, 21, 22, 28, 28, 33, 39, 50, 53, 56, 59, 65, 77, 90, 95},
+				},
+			},
+		},
+		{
+			"MediansOfMedians",
+			MediansOfMedians.Select,
+			[]struct {
+				index int
+				initial, expected []int
+			} {
+				{
+					3,
+					[]int{65, 28, 59, 33, 21},
+					[]int{21, 28, 33, 59, 65},
 				},
 			},
 		},

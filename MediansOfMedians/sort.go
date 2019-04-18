@@ -89,7 +89,7 @@ func insertionSortMedian (array sort.Interface, left, right int) int {
 	i := left + 1
 	for i <= right {
 		j := i
-		for j > left && array.Less(j - 1, j) {
+		for j > left && array.Less(j, j - 1) {
 			array.Swap(j - 1, j)
 			j = j - 1
 		}
