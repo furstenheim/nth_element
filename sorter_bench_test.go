@@ -6,6 +6,7 @@ import (
 	"github.com/furstenheim/nth_element/FloydRivest"
 	"github.com/furstenheim/nth_element/FullSort"
 	"github.com/furstenheim/nth_element/QuickSelect"
+	"github.com/furstenheim/nth_element/MediansOfMedians"
 	"github.com/furstenheim/nth_element/utils"
 
 )
@@ -47,22 +48,39 @@ func BenchmarkBuckets (b *testing.B) {
 }
 
 func benchArray (b * testing.B, size, nBuckets int, ta testArray, inputArray []int) {
+	benchCases := []struct {
+		name string
+		maxSize int // avoid O(n2) in quickselect worst case
+		algorithm func (nthElementUtils.IntSorter, int)
+	} {
+		{
+			"FloydRivest",
+			-1,
+			FloydRivest.IntBuckets,
+		},
+		{
+			"QuickSelect",
+			1000000,
+			QuickSelect.IntBuckets,
+		},
+		{
+			"MediansOfMedians",
+			-1,
+			MediansOfMedians.IntBuckets,
+		},
+	}
 	bucketSize := size / nBuckets
-	b.Run("Floyd Rivest", func (b *testing.B) {
-		for n := 0; n < b.N; n++ {
-			inputArray = inputArray[0:size]
-			ta.setUpFunction(inputArray)
-			FloydRivest.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
+	for _, bc := range(benchCases) {
+		if bc.maxSize == -1 || size < bc.maxSize {
+			b.Run(bc.name, func (b * testing.B) {
+				for n := 0; n < b.N; n++ {
+					inputArray = inputArray[0:size]
+					ta.setUpFunction(inputArray)
+					bc.algorithm(nthElementUtils.IntSorter(inputArray), bucketSize)
+				}
+			})
 		}
-	})
-	if (size < 1000000) { // Quick select is quadratic for constant values
-		b.Run("QuickSelect", func (b *testing.B) {
-			for n := 0; n < b.N; n++ {
-				inputArray = inputArray[0:size]
-				ta.setUpFunction(inputArray)
-				QuickSelect.IntBuckets(nthElementUtils.IntSorter(inputArray), bucketSize)
-			}
-		})
+
 	}
 	b.Run("Full Sort", func (b *testing.B) {
 		for n := 0; n < b.N; n++ {

@@ -82,6 +82,7 @@ func Select(array sort.Interface, k, left, right int) {
 				j--
 			}
 		}
+		// All equal points
 		if !array.Less(left, pointIndex) && !array.Less(pointIndex, left) {
 			array.Swap(left, j)
 		} else {

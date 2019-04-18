@@ -8,6 +8,7 @@ import (
 	"github.com/furstenheim/nth_element/utils"
 	"github.com/furstenheim/nth_element/FloydRivest"
 	"github.com/furstenheim/nth_element/QuickSelect"
+	"github.com/furstenheim/nth_element/MediansOfMedians"
 	"sort"
 )
 
@@ -48,6 +49,10 @@ func TestSelect_RandomArray (t * testing.T) {
 		{
 			"QuickSelect",
 			QuickSelect.Select,
+		},
+		{
+			"MediansOfMedians",
+			MediansOfMedians.Select,
 		},
 	}
 	for _, tc := range(testCases) {

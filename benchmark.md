@@ -1,158 +1,33 @@
 === RUN   TestSelect_BigArray
---- PASS: TestSelect_BigArray (2.37s)
+--- PASS: TestSelect_BigArray (2.31s)
 === RUN   TestSelect_RandomArray
---- PASS: TestSelect_RandomArray (35.36s)
+--- FAIL: TestSelect_RandomArray (1.02s)
+    select_test.go:70: 
+        	Error Trace:	select_test.go:70
+        	Error:      	"%!s(int=5099083273840999716)" is not less or equal than "%!s(int=5098757367429803214)"
+        	Test:       	TestSelect_RandomArray
+    select_test.go:70: 
+        	Error Trace:	select_test.go:70
+        	Error:      	"%!s(int=5099083273840999716)" is not less or equal than "%!s(int=5098771971608903699)"
+        	Test:       	TestSelect_RandomArray
+    select_test.go:70: 
+        	Error Trace:	select_test.go:70
+        	Error:      	"%!s(int=5099083273840999716)" is not less or equal than "%!s(int=4979504428492036838)"
+        	Test:       	TestSelect_RandomArray
+    select_test.go:70: 
+        	Error Trace:	select_test.go:70
+        	Error:      	"%!s(int=5099083273840999716)" is not less or equal than "%!s(int=5039543713335519498)"
+        	Test:       	TestSelect_RandomArray
 === RUN   TestBucketsSize1
 --- PASS: TestBucketsSize1 (0.00s)
 === RUN   TestBucketsBig
---- PASS: TestBucketsBig (0.48s)
+--- PASS: TestBucketsBig (0.52s)
 === RUN   TestSelectKnownArray
 --- PASS: TestSelectKnownArray (0.00s)
 === RUN   TestSelectKnownArray2
 --- PASS: TestSelectKnownArray2 (0.00s)
 === RUN   TestSelectVariousIndices
 --- PASS: TestSelectVariousIndices (0.00s)
-goos: linux
-goarch: amd64
-BenchmarkBuckets/Size_100/Buckets_2/sorted/Floyd_Rivest-4         	 5000000	       429 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/sorted/QuickSelect-4          	 3000000	       529 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/sorted/Full_Sort-4            	 2000000	      1110 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/inverted/Floyd_Rivest-4       	 2000000	       650 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/inverted/QuickSelect-4        	 5000000	       442 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/inverted/Full_Sort-4          	 1000000	      1271 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/constant/Floyd_Rivest-4       	 2000000	       760 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/constant/QuickSelect-4        	  300000	      4582 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/constant/Full_Sort-4          	 5000000	       394 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/sawLike/Floyd_Rivest-4        	 1000000	      2077 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/sawLike/QuickSelect-4         	  200000	      5912 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/sawLike/Full_Sort-4           	 1000000	      1654 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/pyramid/Floyd_Rivest-4        	 1000000	      2140 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/pyramid/QuickSelect-4         	  500000	      4029 ns/op
-BenchmarkBuckets/Size_100/Buckets_2/pyramid/Full_Sort-4           	 1000000	      1682 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sorted/Floyd_Rivest-4        	 1000000	      2088 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sorted/QuickSelect-4         	  500000	      3256 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sorted/Full_Sort-4           	  100000	     18605 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/inverted/Floyd_Rivest-4      	  200000	      6158 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/inverted/QuickSelect-4       	 1000000	      2441 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/inverted/Full_Sort-4         	  100000	     18815 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/constant/Floyd_Rivest-4      	  300000	      5325 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/constant/QuickSelect-4       	    3000	    390721 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/constant/Full_Sort-4         	  500000	      2996 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sawLike/Floyd_Rivest-4       	  100000	     17105 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sawLike/QuickSelect-4        	  100000	     18088 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/sawLike/Full_Sort-4          	  100000	     21270 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/pyramid/Floyd_Rivest-4       	  100000	     15311 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/pyramid/QuickSelect-4        	    5000	    320321 ns/op
-BenchmarkBuckets/Size_1000/Buckets_2/pyramid/Full_Sort-4          	  100000	     21584 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sorted/Floyd_Rivest-4       	  100000	     17302 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sorted/QuickSelect-4        	   50000	     30016 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sorted/Full_Sort-4          	   10000	    207615 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/inverted/Floyd_Rivest-4     	   20000	     57063 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/inverted/QuickSelect-4      	   50000	     22547 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/inverted/Full_Sort-4        	   10000	    255808 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/constant/Floyd_Rivest-4     	   30000	     50756 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/constant/QuickSelect-4      	      50	  38443593 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/constant/Full_Sort-4        	   50000	     29941 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sawLike/Floyd_Rivest-4      	   10000	    183141 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sawLike/QuickSelect-4       	    2000	    801590 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/sawLike/Full_Sort-4         	    3000	    384025 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/pyramid/Floyd_Rivest-4      	   10000	    148180 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/pyramid/QuickSelect-4       	      50	  32776142 ns/op
-BenchmarkBuckets/Size_10000/Buckets_2/pyramid/Full_Sort-4         	    3000	    465366 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sorted/Floyd_Rivest-4      	   10000	    176808 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sorted/QuickSelect-4       	    5000	    312106 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sorted/Full_Sort-4         	     500	   2542505 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/inverted/Floyd_Rivest-4    	    3000	    517894 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/inverted/QuickSelect-4     	    5000	    211261 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/inverted/Full_Sort-4       	     500	   2799558 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/constant/Floyd_Rivest-4    	    3000	    473685 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/constant/QuickSelect-4     	       1	3678356569 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/constant/Full_Sort-4       	    5000	    308998 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sawLike/Floyd_Rivest-4     	    1000	   1522222 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sawLike/QuickSelect-4      	      20	  66501470 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/sawLike/Full_Sort-4        	     300	   4479986 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/pyramid/Floyd_Rivest-4     	    1000	   1675630 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/pyramid/QuickSelect-4      	       1	3238430976 ns/op
-BenchmarkBuckets/Size_100000/Buckets_2/pyramid/Full_Sort-4        	     300	   5462482 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/sorted/Floyd_Rivest-4     	     500	   2908912 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/sorted/Full_Sort-4        	      50	  31055534 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/inverted/Floyd_Rivest-4   	     200	   6041033 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/inverted/Full_Sort-4      	      50	  32234758 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/constant/Floyd_Rivest-4   	     200	   6232912 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/constant/Full_Sort-4      	     300	   4318059 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/sawLike/Floyd_Rivest-4    	     100	  15575402 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/sawLike/Full_Sort-4       	      20	  51369443 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/pyramid/Floyd_Rivest-4    	     100	  18423850 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_2/pyramid/Full_Sort-4       	      20	  62369343 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sorted/Floyd_Rivest-4         	 1000000	      1620 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sorted/QuickSelect-4          	 1000000	      2295 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sorted/Full_Sort-4            	 2000000	       983 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/inverted/Floyd_Rivest-4       	 1000000	      1919 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/inverted/QuickSelect-4        	  500000	      3206 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/inverted/Full_Sort-4          	 2000000	      1140 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/constant/Floyd_Rivest-4       	 1000000	      2633 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/constant/QuickSelect-4        	  200000	      9985 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/constant/Full_Sort-4          	 5000000	       355 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sawLike/Floyd_Rivest-4        	  500000	      3837 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sawLike/QuickSelect-4         	  200000	     10828 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/sawLike/Full_Sort-4           	 1000000	      1636 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/pyramid/Floyd_Rivest-4        	  500000	      4103 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/pyramid/QuickSelect-4         	  200000	      6527 ns/op
-BenchmarkBuckets/Size_100/Buckets_9/pyramid/Full_Sort-4           	 1000000	      1579 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sorted/Floyd_Rivest-4        	  300000	      6422 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sorted/QuickSelect-4         	  200000	      8948 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sorted/Full_Sort-4           	  100000	     15222 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/inverted/Floyd_Rivest-4      	  200000	      9495 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/inverted/QuickSelect-4       	  100000	     14336 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/inverted/Full_Sort-4         	  100000	     16466 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/constant/Floyd_Rivest-4      	  100000	     12060 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/constant/QuickSelect-4       	    2000	    635774 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/constant/Full_Sort-4         	  500000	      2866 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sawLike/Floyd_Rivest-4       	   50000	     30685 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sawLike/QuickSelect-4        	   20000	     58349 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/sawLike/Full_Sort-4          	   50000	     21215 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/pyramid/Floyd_Rivest-4       	  100000	     25782 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/pyramid/QuickSelect-4        	    5000	    349419 ns/op
-BenchmarkBuckets/Size_1000/Buckets_9/pyramid/Full_Sort-4          	  100000	     23721 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sorted/Floyd_Rivest-4       	   30000	     53611 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sorted/QuickSelect-4        	   20000	     72810 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sorted/Full_Sort-4          	    5000	    201729 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/inverted/Floyd_Rivest-4     	   10000	    109671 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/inverted/QuickSelect-4      	   10000	    147777 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/inverted/Full_Sort-4        	    5000	    281626 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/constant/Floyd_Rivest-4     	   10000	    147702 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/constant/QuickSelect-4      	      20	  90539397 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/constant/Full_Sort-4        	   30000	     38029 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sawLike/Floyd_Rivest-4      	    5000	    402540 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sawLike/QuickSelect-4       	    2000	    901674 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/sawLike/Full_Sort-4         	    5000	    387709 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/pyramid/Floyd_Rivest-4      	    5000	    277559 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/pyramid/QuickSelect-4       	      30	  35971371 ns/op
-BenchmarkBuckets/Size_10000/Buckets_9/pyramid/Full_Sort-4         	    3000	    451927 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sorted/Floyd_Rivest-4      	    3000	    472240 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sorted/QuickSelect-4       	    2000	    711154 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sorted/Full_Sort-4         	     500	   2627173 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/inverted/Floyd_Rivest-4    	    1000	   1467714 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/inverted/QuickSelect-4     	    1000	   1369532 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/inverted/Full_Sort-4       	     500	   2584077 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/constant/Floyd_Rivest-4    	    2000	   1162254 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/constant/QuickSelect-4     	       1	6110033603 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/constant/Full_Sort-4       	    5000	    301985 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sawLike/Floyd_Rivest-4     	     500	   2475892 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sawLike/QuickSelect-4      	      20	  67962906 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/sawLike/Full_Sort-4        	     300	   4373137 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/pyramid/Floyd_Rivest-4     	     500	   2931797 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/pyramid/QuickSelect-4      	       1	3426167472 ns/op
-BenchmarkBuckets/Size_100000/Buckets_9/pyramid/Full_Sort-4        	     300	   5517782 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/sorted/Floyd_Rivest-4     	     200	   6187122 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/sorted/Full_Sort-4        	      50	  31106615 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/inverted/Floyd_Rivest-4   	      50	  25148533 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/inverted/Full_Sort-4      	      50	  32152704 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/constant/Floyd_Rivest-4   	     100	  12918130 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/constant/Full_Sort-4      	     300	   4385039 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/sawLike/Floyd_Rivest-4    	      50	  21142129 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/sawLike/Full_Sort-4       	      20	  54102042 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/pyramid/Floyd_Rivest-4    	      30	  41764013 ns/op
-BenchmarkBuckets/Size_1000000/Buckets_9/pyramid/Full_Sort-4       	      20	  61995236 ns/op
-PASS
-ok  	_/home/gabi/Gabi/apps/FloydRivest	303.940s
+FAIL
+exit status 1
+FAIL	_/home/gabi/Gabi/apps/FloydRivest	3.859s
