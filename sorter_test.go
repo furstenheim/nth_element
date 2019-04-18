@@ -18,7 +18,51 @@ func init () {
 	}
 }
 
+func TestSelect_ConcreteExamples (t * testing.T) {
+	testCases := []struct {
+		name      string
+		algorithm func (array sort.Interface, k, left, right int)
+		examples  []struct {
+			index int
+			initial, expected []int
+		}
+	} {
+		{
+			"FloydRivest",
+			FloydRivest.Select,
+			[]struct {
+				index int
+				initial, expected []int
+			} {
+				{
+					8,
+					[]int{65, 28, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39},
+					[]int{39, 28, 28, 33, 21, 12, 22, 50, 53, 56, 59, 65, 90, 77, 95},
+				},
+
+				{
+					3,
+					[]int{22, 33, 12, 95, 65, 28, 28, 77, 39, 21, 59, 50, 53, 56, 90},
+					[]int{12, 21, 22, 28, 28, 33, 39, 50, 53, 56, 59, 65, 77, 90, 95},
+				},
+			},
+		},
+	}
+
+	for _, tc := range(testCases) {
+		for _, e := range(tc.examples) {
+			sortedCopy := append([]int{}, e.initial...)
+			sort.Sort(sorter(sortedCopy))
+			tc.algorithm(sorter(e.initial), e.index, 0, len(e.initial) - 1)
+			assert.Equal(t, e.expected, e.initial)
+			assert.Equal(t, e.initial[e.index], sortedCopy[e.index])
+		}
+	}
+}
+
+
 func TestBucketsSize1(t *testing.T) {
+
 	a := []int{65, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
 	FloydRivest.Buckets(sorter(a), 1)
 	expected := append([]int{}, a...)
@@ -55,25 +99,6 @@ func TestBucketsBig(t *testing.T) {
 	}
 }
 
-func TestSelectKnownArray(t *testing.T) {
-	arr := []int{65, 28, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
-	sortedCopy := append([]int{}, arr...)
-	sort.Sort(sorter(sortedCopy))
-	index := 8
-	FloydRivest.Select(sorter(arr), index, 0, len(arr) - 1)
-	assert.True(t, reflect.DeepEqual(arr, []int{39, 28, 28, 33, 21, 12, 22, 50, 53, 56, 59, 65, 90, 77, 95}))
-	assert.Equal(t, arr[index], sortedCopy[index])
-}
-
-func TestSelectKnownArray2(t *testing.T) {
-	arr := []int{22, 33, 12, 95, 65, 28, 28, 77, 39, 21, 59, 50, 53, 56, 90}
-	sortedCopy := append([]int{}, arr...)
-	sort.Sort(sorter(sortedCopy))
-	index := 3
-	FloydRivest.Select(sorter(arr), index, 0, len(arr) - 1)
-	assert.True(t, reflect.DeepEqual(arr, []int{12, 21, 22, 28, 28, 33, 39, 50, 53, 56, 59, 65, 77, 90, 95}))
-	assert.Equal(t, arr[index], sortedCopy[index])
-}
 
 func TestSelectVariousIndices(t *testing.T) {
 	arr := []int{65, 28, 59, 33, 21, 56, 22, 95, 50, 12, 90, 53, 28, 77, 39}
