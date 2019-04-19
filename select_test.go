@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"github.com/furstenheim/nth_element/utils"
 	"github.com/furstenheim/nth_element/FloydRivest"
-	"github.com/furstenheim/nth_element/QuickSelect"
+ 	"github.com/furstenheim/nth_element/QuickSelect"
 	"github.com/furstenheim/nth_element/MediansOfMedians"
 	"sort"
 )
@@ -56,8 +56,7 @@ func TestSelect_RandomArray (t * testing.T) {
 		},
 	}
 	for _, tc := range(testCases) {
-		
-		nTests := 20
+		nTests := 100
 		for j := 0; j < nTests; j++ {
 			rand.Shuffle(len(a), func (i, j int) { a[i], a[j] = a[j], a[i] })
 			k := rand.Intn(len(a))

@@ -61,7 +61,8 @@ func _select(array sort.Interface, k, left, right int) int {
 	}
 	return -1
 }
-
+// Compute approximation of median by computing the median of subgroups of size 5,
+// Pushing them to front and then computing the median of that
 func pivotFunc(array sort.Interface, left, right int) int {
 	// for 5 or less elements we just get the median
 	if right - left < 5 {
@@ -77,12 +78,14 @@ func pivotFunc(array sort.Interface, left, right int) int {
 			subRight = right
 		}
 		median5 := insertionSortMedian(array, i, subRight)
-		array.Swap(median5, j)
+		array.Swap(median5, left + (i - left) / 5) // actually j
 		j++
 	}
 	// compute the median of the n/5 medians of five
-	mid := (j + left) / 2
-	return _select(array, mid, left, j)
+	// log.Println(j, left, (j + left) / 2, array)
+	mid := (right -left) / 10 + left + 1 // (j + left) / 2 not really
+
+	return _select(array, mid, left, left + (right - left) / 5)
 }
 
 func insertionSortMedian (array sort.Interface, left, right int) int {
@@ -103,7 +106,7 @@ func partition (array sort.Interface, k, left, right, pivotIndex int) int {
 	array.Swap(pivotIndex, right)
 	storeIndex := left
 	// Move all elements smaller than the pivot to the left of the pivot
-	for i := left; i < right - 1; i++ {
+	for i := left; i < right; i++ {
 		// pivot value is stored in right position
 		// so here we compare with pivot
 		if array.Less(i, right) {
@@ -113,7 +116,7 @@ func partition (array sort.Interface, k, left, right, pivotIndex int) int {
 	}
 	// Now move all items equal to the pivot value after the smaller items
 	storeIndexEq := storeIndex
-	for i := storeIndexEq; i < right - 1; i++ {
+	for i := storeIndexEq; i < right; i++ {
 		if !array.Less(i, right) && !array.Less(right, i) {
 			array.Swap(storeIndexEq, i)
 			storeIndexEq++
