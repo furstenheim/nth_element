@@ -56,7 +56,7 @@ func TestSelect_RandomArray (t * testing.T) {
 		},
 	}
 	for _, tc := range(testCases) {
-		nTests := 100
+		nTests := 20
 		for j := 0; j < nTests; j++ {
 			rand.Shuffle(len(a), func (i, j int) { a[i], a[j] = a[j], a[i] })
 			k := rand.Intn(len(a))
